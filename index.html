@@ -393,9 +393,4 @@
     </div>
   </section>
 
-  <footer class="note">
-    <h3>How this dashboard works</h3>
-    <p>Every card above reflects a real check: public status-page feeds for GitHub, Dropbox, Airtable, Claude and ElevenLabs; live identity/session checks for Microsoft 365 and the UniFi console; and a plain HTTP reachability check against the internal app host. A local Claude Code session re-runs these checks and republishes this page every <strong>30 minutes</strong> — it isn't a live in-browser feed, since browser sandboxes can't reach arbitrary vendor or internal APIs directly.</p>
-    <p>This auto-refresh only runs while that Claude Code session stays open (job <code>505da8ad</code>, auto-expires after 7 days). X/Twitter cross-checks were left out: the connected API credential is on X's free tier, which has no read/search access, so account monitoring isn't possible without upgrading to a paid tier. The internal app host's hostname/IP is intentionally omitted from this page since it's publicly reachable at health.fogarty.services. Connect an API key for UniFi Network/Protect/Access to get real device-level status instead of a connectivity check.</p>
-  </footer>
 </div>
