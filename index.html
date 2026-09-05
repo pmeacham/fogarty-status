@@ -1,0 +1,400 @@
+<title>Fogarty Status</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #f3f6f8;
+    --surface: #ffffff;
+    --surface-2: #eaf0f3;
+    --border: #d7e0e5;
+    --ink: #10181f;
+    --ink-muted: #56646d;
+    --ink-faint: #8b969c;
+    --accent: #1d6b63;
+    --accent-ink: #0f3d38;
+    --ok: #2e9e6b;
+    --ok-bg: #e3f5ec;
+    --warn: #c98a1f;
+    --warn-bg: #fbf0dd;
+    --bad: #cf4646;
+    --bad-bg: #fbe7e7;
+    --gap: #6b7680;
+    --gap-bg: #eaeef0;
+    --shadow: 0 1px 2px rgba(16,24,31,0.04), 0 6px 20px rgba(16,24,31,0.05);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e1418;
+      --surface: #151d23;
+      --surface-2: #1b252c;
+      --border: #2a363e;
+      --ink: #eef3f5;
+      --ink-muted: #a1adb4;
+      --ink-faint: #718089;
+      --accent: #4fb3a4;
+      --accent-ink: #b6ece1;
+      --ok: #46c088;
+      --ok-bg: #123424;
+      --warn: #e0a83f;
+      --warn-bg: #3a2c10;
+      --bad: #e2685f;
+      --bad-bg: #3a1717;
+      --gap: #93a0a8;
+      --gap-bg: #232f36;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0e1418;
+    --surface: #151d23;
+    --surface-2: #1b252c;
+    --border: #2a363e;
+    --ink: #eef3f5;
+    --ink-muted: #a1adb4;
+    --ink-faint: #718089;
+    --accent: #4fb3a4;
+    --accent-ink: #b6ece1;
+    --ok: #46c088;
+    --ok-bg: #123424;
+    --warn: #e0a83f;
+    --warn-bg: #3a2c10;
+    --bad: #e2685f;
+    --bad-bg: #3a1717;
+    --gap: #93a0a8;
+    --gap-bg: #232f36;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    line-height: 1.45;
+  }
+
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 40px 24px 64px;
+  }
+
+  .eyebrow {
+    font-family: "IBM Plex Sans Condensed", sans-serif;
+    font-weight: 600;
+    font-size: 12.5px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  h1 {
+    font-size: clamp(26px, 4vw, 34px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 6px 0 2px;
+    text-wrap: balance;
+  }
+
+  .subhead {
+    color: var(--ink-muted);
+    font-size: 14.5px;
+    max-width: 62ch;
+  }
+
+  .banner {
+    margin-top: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 22px 24px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .banner-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--ok);
+    flex: none;
+    position: relative;
+  }
+  .banner-dot::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1.5px solid var(--ok);
+    opacity: 0.5;
+    animation: ring 2.4s ease-out infinite;
+  }
+  .banner.warn .banner-dot { background: var(--warn); }
+  .banner.warn .banner-dot::after { border-color: var(--warn); }
+  .banner.bad .banner-dot { background: var(--bad); }
+  .banner.bad .banner-dot::after { border-color: var(--bad); }
+  @media (prefers-reduced-motion: reduce) {
+    .banner-dot::after { animation: none; }
+  }
+  @keyframes ring {
+    from { transform: scale(0.7); opacity: 0.6; }
+    to { transform: scale(1.9); opacity: 0; }
+  }
+
+  .banner-text { flex: 1 1 320px; }
+  .banner-title { font-weight: 600; font-size: 16.5px; }
+  .banner-sub { color: var(--ink-muted); font-size: 13.5px; margin-top: 2px; }
+
+  .banner-meta {
+    font-family: "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    text-align: right;
+    line-height: 1.6;
+  }
+  .banner-meta strong { color: var(--ink-muted); font-weight: 500; }
+
+  section.group { margin-top: 40px; }
+
+  .group-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+  }
+
+  .group-head h2 {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted);
+  }
+
+  .group-count {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 16px 14px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .card-name { font-weight: 600; font-size: 15px; }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "IBM Plex Sans Condensed", sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 3px 9px 3px 7px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .pill::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+  }
+  .pill.ok { background: var(--ok-bg); color: var(--ok); }
+  .pill.ok::before { background: var(--ok); }
+  .pill.warn { background: var(--warn-bg); color: var(--warn); }
+  .pill.warn::before { background: var(--warn); }
+  .pill.bad { background: var(--bad-bg); color: var(--bad); }
+  .pill.bad::before { background: var(--bad); }
+  .pill.gap { background: var(--gap-bg); color: var(--gap); }
+  .pill.gap::before { background: var(--gap); }
+
+  .card-note { font-size: 13px; color: var(--ink-muted); flex: 1; }
+
+  .card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    border-top: 1px dashed var(--border);
+    padding-top: 9px;
+  }
+
+  footer.note {
+    margin-top: 44px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+  footer.note h3 {
+    font-size: 12.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+  footer.note p { margin: 6px 0; max-width: 74ch; }
+  footer.note code {
+    font-family: "IBM Plex Mono", monospace;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 12px;
+    color: var(--ink);
+  }
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">Fogarty Services &middot; System Health</div>
+  <h1>Company Systems Status</h1>
+  <p class="subhead">A single view of the SaaS tools, developer platforms, and network infrastructure Fogarty Services runs on day to day.</p>
+
+  <div class="banner">
+    <div class="banner-dot"></div>
+    <div class="banner-text">
+      <div class="banner-title">All monitored systems operational</div>
+      <div class="banner-sub">7 of 8 checked services fully operational. UniFi has limited automated visibility — see note below.</div>
+    </div>
+    <div class="banner-meta">
+      Last refreshed<br>
+      <strong>2026-09-05 &middot; 14:05 UTC</strong>
+    </div>
+  </div>
+
+  <section class="group">
+    <div class="group-head">
+      <h2>Productivity &amp; Collaboration</h2>
+      <span class="group-count">3 services</span>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-top">
+          <span class="card-name">Microsoft 365</span>
+          <span class="pill ok">Operational</span>
+        </div>
+        <p class="card-note">Outlook, Teams &amp; SharePoint. Confirmed reachable via active signed-in session.</p>
+        <div class="card-foot"><span>session check</span><span>14:05 UTC</span></div>
+      </div>
+      <div class="card">
+        <div class="card-top">
+          <span class="card-name">Dropbox</span>
+          <span class="pill ok">Operational</span>
+        </div>
+        <p class="card-note">Fogarty Services team space. 12 of 12 public components normal.</p>
+        <div class="card-foot"><span>status.dropbox.com</span><span>14:05 UTC</span></div>
+      </div>
+      <div class="card">
+        <div class="card-top">
+          <span class="card-name">Airtable</span>
+          <span class="pill ok">Operational</span>
+        </div>
+        <p class="card-note">Base access confirmed. Public status page reporting normal service.</p>
+        <div class="card-foot"><span>status.airtable.com</span><span>14:05 UTC</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="group">
+    <div class="group-head">
+      <h2>Developer &amp; AI Platforms</h2>
+      <span class="group-count">3 services</span>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-top">
+          <span class="card-name">GitHub</span>
+          <span class="pill ok">Operational</span>
+        </div>
+        <p class="card-note">Git, Actions, Packages &amp; Copilot. 12 of 12 components normal.</p>
+        <div class="card-foot"><span>githubstatus.com</span><span>14:05 UTC</span></div>
+      </div>
+      <div class="card">
+        <div class="card-top">
+          <span class="card-name">Claude / Anthropic API</span>
+          <span class="pill ok">Operational</span>
+        </div>
+        <p class="card-note">claude.ai, Claude Code &amp; API. 6 of 6 components normal.</p>
+        <div class="card-foot"><span>status.claude.com</span><span>14:05 UTC</span></div>
+      </div>
+      <div class="card">
+        <div class="card-top">
+          <span class="card-name">ElevenLabs</span>
+          <span class="pill ok">Operational</span>
+        </div>
+        <p class="card-note">Voice &amp; agent platform. 11 of 11 components normal.</p>
+        <div class="card-foot"><span>status.elevenlabs.io</span><span>14:05 UTC</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="group">
+    <div class="group-head">
+      <h2>Network &amp; Infrastructure</h2>
+      <span class="group-count">2 systems</span>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-top">
+          <span class="card-name">Internal App Host</span>
+          <span class="pill ok">Operational</span>
+        </div>
+        <p class="card-note">Shared server behind most internal *.fogarty.services tools. Reachability check only — hostname withheld from this public page.</p>
+        <div class="card-foot"><span>reachability check</span><span>14:05 UTC</span></div>
+      </div>
+      <div class="card">
+        <div class="card-top">
+          <span class="card-name">UniFi Console</span>
+          <span class="pill gap">Limited visibility</span>
+        </div>
+        <p class="card-note">Cloud link to the local controller is reachable, but Network, Protect &amp; Access apps have no API key configured, so device-level health isn't visible here.</p>
+        <div class="card-foot"><span>local controller</span><span>14:05 UTC</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="note">
+    <h3>How this dashboard works</h3>
+    <p>Every card above reflects a real check: public status-page feeds for GitHub, Dropbox, Airtable, Claude and ElevenLabs; live identity/session checks for Microsoft 365 and the UniFi console; and a plain HTTP reachability check against the internal app host. A local Claude Code session re-runs these checks and republishes this page every <strong>30 minutes</strong> — it isn't a live in-browser feed, since browser sandboxes can't reach arbitrary vendor or internal APIs directly.</p>
+    <p>This auto-refresh only runs while that Claude Code session stays open (job <code>505da8ad</code>, auto-expires after 7 days). X/Twitter cross-checks were left out: the connected API credential is on X's free tier, which has no read/search access, so account monitoring isn't possible without upgrading to a paid tier. The internal app host's hostname/IP is intentionally omitted from this page since it's publicly reachable at health.fogarty.services. Connect an API key for UniFi Network/Protect/Access to get real device-level status instead of a connectivity check.</p>
+  </footer>
+</div>
